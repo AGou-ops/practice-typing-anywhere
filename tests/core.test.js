@@ -30,4 +30,12 @@ test('图标保持在视口内并吸附最近边缘', () => {
     snapToNearestEdge({ x: 900, y: 300 }, { width: 1000, height: 800 }, 40),
     { x: 960, y: 300 },
   );
+  assert.deepEqual(
+    snapToNearestEdge({ x: 200, y: 10 }, { width: 1000, height: 800 }, 40),
+    { x: 200, y: 0 },
+  );
+  assert.deepEqual(
+    snapToNearestEdge({ x: 200, y: 790 }, { width: 1000, height: 800 }, 40),
+    { x: 200, y: 760 },
+  );
 });

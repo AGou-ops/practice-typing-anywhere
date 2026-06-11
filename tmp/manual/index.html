@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Typing Everywhere Manual Test</title>
+    <style>
+      body {
+        margin: 0 auto;
+        max-width: 720px;
+        padding: 48px 20px 120px;
+        font: 18px/1.8 Georgia, "Noto Serif SC", serif;
+        color: #1a1a1a;
+        background: linear-gradient(180deg, #f7f3ea 0%, #fffdf9 100%);
+      }
+
+      h1 {
+        font-size: 40px;
+        line-height: 1.1;
+        margin-bottom: 24px;
+      }
+
+      p {
+        margin: 0 0 20px;
+      }
+
+      .note {
+        padding: 16px 18px;
+        border-left: 4px solid #1f6feb;
+        background: rgba(31, 111, 235, 0.08);
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        font: inherit;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Typing Everywhere 验收页</h1>
+    <p class="note">点击右上角图标后，从任意段落开始练习。练习期间原文应保持不变，只出现右下角统计弹窗。</p>
+    <p>English linked <a href="#target">paragraph</a> for typing practice.</p>
+    <p>中文输入法测试段落，适合确认组合输入提交后再计数。</p>
+    <p>第三段用来验证自动切换到下一段时的连续体验。</p>
+    <input placeholder="退出后这里应该恢复正常输入">
+    <script src="/dist/typing-everywhere.user.js"></script>
+  </body>
+</html>
