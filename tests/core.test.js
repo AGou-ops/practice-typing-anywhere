@@ -1,6 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
+import {
+  DEFAULT_CONFIG,
+  PRESET_THEMES,
+  mergeConfig,
+} from '../src/core/config.js';
 import { normalizeText, splitCharacters } from '../src/core/characters.js';
 import { calculateMetrics } from '../src/core/metrics.js';
 import { clampPosition, snapToNearestEdge } from '../src/core/position.js';
@@ -37,5 +42,26 @@ test('图标保持在视口内并吸附最近边缘', () => {
   assert.deepEqual(
     snapToNearestEdge({ x: 200, y: 790 }, { width: 1000, height: 800 }, 40),
     { x: 200, y: 760 },
+  );
+});
+
+test('合并部分配置时保留默认主题和行为开关', () => {
+  assert.equal(PRESET_THEMES.Classic.colors.pending, '#9ca3af');
+  assert.deepEqual(
+    mergeConfig({
+      colors: { error: '#ff0000' },
+      behavior: { followCurrentParagraph: false },
+    }),
+    {
+      ...DEFAULT_CONFIG,
+      colors: {
+        ...DEFAULT_CONFIG.colors,
+        error: '#ff0000',
+      },
+      behavior: {
+        ...DEFAULT_CONFIG.behavior,
+        followCurrentParagraph: false,
+      },
+    },
   );
 });
