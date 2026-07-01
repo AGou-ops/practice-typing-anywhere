@@ -340,6 +340,20 @@ export function createTypingApp({
       return;
     }
 
+    if (target.closest('.te-icon-reset')) {
+      event.preventDefault();
+      event.stopPropagation();
+      touch();
+      config = mergeConfig({
+        ...config,
+        icon: { ...DEFAULT_CONFIG.icon },
+      });
+      widget.setIcon(config.icon);
+      widget.showSettings(config);
+      saveConfig();
+      return;
+    }
+
     if (!target.closest('.te-settings-close')) {
       return;
     }

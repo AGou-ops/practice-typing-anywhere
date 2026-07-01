@@ -382,18 +382,25 @@
       .te-button {
         width: 44px;
         height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
         border: 0;
         border-radius: 999px;
         background: var(--te-outline-color, #1f6feb);
         color: #ffffff;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.22);
         font: 600 18px/1 system-ui, sans-serif;
+        overflow: hidden;
       }
 
       .te-start-button img {
-        width: 28px;
-        height: 28px;
-        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        display: block;
+        object-fit: cover;
         pointer-events: none;
       }
 
@@ -489,10 +496,10 @@
         min-width: 260px;
         max-width: min(520px, calc(100vw - 32px));
         padding: 16px 20px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(3, 252, 11, 0.35);
         border-radius: 14px;
-        background: rgba(23, 25, 31, 0.92);
-        color: #ffffff;
+        background: #000000;
+        color: #03fc0b;
         font: 15px/1.5 system-ui, sans-serif;
         text-align: center;
         transform: translate(-50%, -50%);
@@ -570,6 +577,16 @@
         padding: 0;
         border: 0;
         background: transparent;
+      }
+
+      .te-icon-reset {
+        padding: 4px 10px;
+        border: 1px solid rgba(15, 23, 42, 0.16);
+        border-radius: 999px;
+        background: #ffffff;
+        color: #111827;
+        font: 13px/1.5 system-ui, sans-serif;
+        cursor: pointer;
       }
 
       .te-capture {
@@ -763,6 +780,7 @@
             <span>\u81EA\u5B9A\u4E49\u672C\u5730\u56FE\u6807</span>
             <input type="file" name="icon-file" accept="image/*" />
           </label>
+          <button class="te-icon-reset" type="button">\u6062\u590D\u9ED8\u8BA4\u56FE\u6807</button>
         </fieldset>
         <fieldset>
           <legend>\u989C\u8272</legend>
@@ -1165,6 +1183,19 @@
     function handleSettingsClick(event) {
       const target = event.target;
       if (!(target instanceof view.HTMLElement)) {
+        return;
+      }
+      if (target.closest(".te-icon-reset")) {
+        event.preventDefault();
+        event.stopPropagation();
+        touch();
+        config = mergeConfig({
+          ...config,
+          icon: { ...DEFAULT_CONFIG.icon }
+        });
+        widget.setIcon(config.icon);
+        widget.showSettings(config);
+        saveConfig();
         return;
       }
       if (!target.closest(".te-settings-close")) {

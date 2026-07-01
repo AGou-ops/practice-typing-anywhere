@@ -72,6 +72,9 @@ test('支持中央提示层、设置面板基础结构与主题应用', () => {
   const prompt = root.querySelector('.te-prompt');
   assert.equal(prompt.style.display, 'block');
   assert.match(prompt.textContent, /按 Enter 开始/);
+  const styleText = root.querySelector('style').textContent;
+  assert.match(styleText, /background: #000000;/);
+  assert.match(styleText, /color: #03fc0b;/);
 
   widget.hidePrompt();
   assert.equal(prompt.style.display, 'none');

@@ -73,18 +73,25 @@ export function createWidget(document) {
       .te-button {
         width: 44px;
         height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
         border: 0;
         border-radius: 999px;
         background: var(--te-outline-color, #1f6feb);
         color: #ffffff;
         box-shadow: 0 10px 25px rgba(15, 23, 42, 0.22);
         font: 600 18px/1 system-ui, sans-serif;
+        overflow: hidden;
       }
 
       .te-start-button img {
-        width: 28px;
-        height: 28px;
-        object-fit: contain;
+        width: 100%;
+        height: 100%;
+        border-radius: inherit;
+        display: block;
+        object-fit: cover;
         pointer-events: none;
       }
 
@@ -180,10 +187,10 @@ export function createWidget(document) {
         min-width: 260px;
         max-width: min(520px, calc(100vw - 32px));
         padding: 16px 20px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(3, 252, 11, 0.35);
         border-radius: 14px;
-        background: rgba(23, 25, 31, 0.92);
-        color: #ffffff;
+        background: #000000;
+        color: #03fc0b;
         font: 15px/1.5 system-ui, sans-serif;
         text-align: center;
         transform: translate(-50%, -50%);
@@ -261,6 +268,16 @@ export function createWidget(document) {
         padding: 0;
         border: 0;
         background: transparent;
+      }
+
+      .te-icon-reset {
+        padding: 4px 10px;
+        border: 1px solid rgba(15, 23, 42, 0.16);
+        border-radius: 999px;
+        background: #ffffff;
+        color: #111827;
+        font: 13px/1.5 system-ui, sans-serif;
+        cursor: pointer;
       }
 
       .te-capture {
@@ -465,6 +482,7 @@ export function createWidget(document) {
             <span>自定义本地图标</span>
             <input type="file" name="icon-file" accept="image/*" />
           </label>
+          <button class="te-icon-reset" type="button">恢复默认图标</button>
         </fieldset>
         <fieldset>
           <legend>颜色</legend>

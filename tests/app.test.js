@@ -799,6 +799,13 @@ test('本地图标上传后会更新并持久化', async () => {
       'data:image/png;base64,custom-icon',
     );
 
+    root.querySelector('.te-icon-reset').dispatchEvent(new Event('click', { bubbles: true }));
+    const resetSaved = JSON.parse(dom.window.localStorage.getItem('typing-everywhere-config'));
+    assert.equal(resetSaved.icon.type, 'emoji');
+    assert.equal(resetSaved.icon.value, '🤓');
+    assert.equal(root.querySelector('.te-start-button img'), null);
+    assert.equal(root.querySelector('.te-start-button').textContent, '🤓');
+
     app.destroy();
   } finally {
     dom.window.FileReader = originalFileReader;
