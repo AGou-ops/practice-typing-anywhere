@@ -7,6 +7,8 @@ export const PRESET_THEMES = {
       error: '#111827',
       errorBackground: '#ff7b6b',
       skipped: '#2563eb',
+      statsBackground: '#000000',
+      statsText: '#00ff51',
     },
   },
   Soft: {
@@ -17,6 +19,8 @@ export const PRESET_THEMES = {
       error: '#ffffff',
       errorBackground: '#d97706',
       skipped: '#6d28d9',
+      statsBackground: '#000000',
+      statsText: '#00ff51',
     },
   },
   HighContrast: {
@@ -27,15 +31,22 @@ export const PRESET_THEMES = {
       error: '#ffffff',
       errorBackground: '#dc2626',
       skipped: '#0f766e',
+      statsBackground: '#000000',
+      statsText: '#00ff51',
     },
   },
 };
 
 export const DEFAULT_CONFIG = {
   theme: 'Classic',
+  icon: {
+    type: 'emoji',
+    value: '🤓',
+  },
   colors: { ...PRESET_THEMES.Classic.colors },
   behavior: {
     followCurrentParagraph: true,
+    followCorrectTextColor: true,
   },
 };
 
@@ -43,6 +54,10 @@ export function mergeConfig(partial = {}) {
   return {
     ...DEFAULT_CONFIG,
     ...partial,
+    icon: {
+      ...DEFAULT_CONFIG.icon,
+      ...partial.icon,
+    },
     colors: {
       ...DEFAULT_CONFIG.colors,
       ...partial.colors,

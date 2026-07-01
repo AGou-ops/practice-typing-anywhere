@@ -47,13 +47,26 @@ test('图标保持在视口内并吸附最近边缘', () => {
 
 test('合并部分配置时保留默认主题和行为开关', () => {
   assert.equal(PRESET_THEMES.Classic.colors.pending, '#9ca3af');
+  assert.equal(PRESET_THEMES.Classic.colors.statsBackground, '#000000');
+  assert.equal(PRESET_THEMES.Classic.colors.statsText, '#00ff51');
+  assert.equal(DEFAULT_CONFIG.icon.type, 'emoji');
+  assert.equal(DEFAULT_CONFIG.icon.value, '🤓');
+  assert.equal(DEFAULT_CONFIG.behavior.followCorrectTextColor, true);
   assert.deepEqual(
     mergeConfig({
       colors: { error: '#ff0000' },
-      behavior: { followCurrentParagraph: false },
+      icon: { type: 'image', value: 'data:image/png;base64,xxx' },
+      behavior: {
+        followCurrentParagraph: false,
+        followCorrectTextColor: false,
+      },
     }),
     {
       ...DEFAULT_CONFIG,
+      icon: {
+        type: 'image',
+        value: 'data:image/png;base64,xxx',
+      },
       colors: {
         ...DEFAULT_CONFIG.colors,
         error: '#ff0000',
@@ -61,6 +74,7 @@ test('合并部分配置时保留默认主题和行为开关', () => {
       behavior: {
         ...DEFAULT_CONFIG.behavior,
         followCurrentParagraph: false,
+        followCorrectTextColor: false,
       },
     },
   );

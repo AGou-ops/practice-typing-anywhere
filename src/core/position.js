@@ -1,31 +1,43 @@
-export function clampPosition(position, viewport, size) {
+export function clampPosition(position, viewport, size, inset = 0) {
   return {
-    x: Math.min(Math.max(position.x, 0), Math.max(viewport.width - size, 0)),
-    y: Math.min(Math.max(position.y, 0), Math.max(viewport.height - size, 0)),
+    x: Math.min(
+      Math.max(position.x, inset),
+      Math.max(viewport.width - size - inset, inset),
+    ),
+    y: Math.min(
+      Math.max(position.y, inset),
+      Math.max(viewport.height - size - inset, inset),
+    ),
   };
 }
 
-export function snapToNearestEdge(position, viewport, size) {
-  const clamped = clampPosition(position, viewport, size);
+export function getClosestEdge(position, viewport, size, inset = 0) {
+  const clamped = clampPosition(position, viewport, size, inset);
   const distances = [
-    ['left', clamped.x],
-    ['right', viewport.width - size - clamped.x],
-    ['top', clamped.y],
-    ['bottom', viewport.height - size - clamped.y],
+    ['left', clamped.x - inset],
+    ['right', viewport.width - size - inset - clamped.x],
+    ['top', clamped.y - inset],
+    ['bottom', viewport.height - size - inset - clamped.y],
   ];
-  const [edge] = distances.reduce((best, item) => (item[1] < best[1] ? item : best));
+
+  return distances.reduce((best, item) => (item[1] < best[1] ? item : best))[0];
+}
+
+export function snapToNearestEdge(position, viewport, size, inset = 0) {
+  const clamped = clampPosition(position, viewport, size, inset);
+  const edge = getClosestEdge(position, viewport, size, inset);
 
   if (edge === 'left') {
-    return { ...clamped, x: 0 };
+    return { ...clamped, x: inset };
   }
 
   if (edge === 'right') {
-    return { ...clamped, x: viewport.width - size };
+    return { ...clamped, x: viewport.width - size - inset };
   }
 
   if (edge === 'top') {
-    return { ...clamped, y: 0 };
+    return { ...clamped, y: inset };
   }
 
-  return { ...clamped, y: viewport.height - size };
+  return { ...clamped, y: viewport.height - size - inset };
 }

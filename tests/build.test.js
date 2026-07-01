@@ -8,5 +8,6 @@ test('构建产物包含 userscript 元数据且不包含 ESM 导入', async () 
   assert.match(output, /^\/\/ ==UserScript==/);
   assert.match(output, /@match\s+\*:\/\/\*\/\*/);
   assert.match(output, /@run-at\s+document-idle/);
+  assert.match(output, /@noframes/);
   assert.doesNotMatch(output, /^\s*import\s/m);
 });

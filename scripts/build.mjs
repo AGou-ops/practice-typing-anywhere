@@ -8,6 +8,7 @@ const banner = `// ==UserScript==
 // @description  在普通网页文本上进行非侵入式连续打字练习
 // @match        *://*/*
 // @run-at       document-idle
+// @noframes
 // @grant        none
 // ==/UserScript==`;
 
