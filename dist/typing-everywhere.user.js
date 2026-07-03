@@ -721,7 +721,11 @@
         typingLayer.style.color = style.color;
         typingLayer.style.padding = style.padding;
         typingLayer.innerHTML = renderCharacters(characters, cursorIndex);
-        positionCursor(typingLayer, cursorIndex, style.lineHeight);
+        const cursorPosition = positionCursor(typingLayer, cursorIndex, style.lineHeight);
+        if (cursorPosition) {
+          capture.style.left = `${Math.round(cursorPosition.left)}px`;
+          capture.style.top = `${Math.round(cursorPosition.top + cursorPosition.height + 4)}px`;
+        }
       },
       hideTypingOverlay() {
         if (maskedTarget) {
@@ -734,6 +738,8 @@
         maskedVisibility = "";
         typingLayer.style.display = "none";
         typingLayer.innerHTML = "";
+        capture.style.left = "";
+        capture.style.top = "";
       },
       showStats({ wpm, cpm, errorRate, elapsedMs = 0 }) {
         stats.style.display = "block";
@@ -873,7 +879,7 @@
   function positionCursor(layer, cursorIndex, lineHeightValue) {
     const cursor = layer.querySelector(".te-cursor");
     if (!cursor || cursorIndex === null) {
-      return;
+      return null;
     }
     const layerRect = layer.getBoundingClientRect();
     const chars = [...layer.querySelectorAll(".te-char")];
@@ -885,7 +891,7 @@
       cursor.style.left = "0px";
       cursor.style.top = "0px";
       cursor.style.height = `${fallbackHeight}px`;
-      return;
+      return { left: layerRect.left, top: layerRect.top, height: fallbackHeight };
     }
     const left = nextChar !== null ? anchorRect.left - layerRect.left : anchorRect.right - layerRect.left;
     const top = anchorRect.top - layerRect.top;
@@ -893,6 +899,7 @@
     cursor.style.left = `${left}px`;
     cursor.style.top = `${top}px`;
     cursor.style.height = `${height}px`;
+    return { left: layerRect.left + left, top: layerRect.top + top, height };
   }
   function escapeHtml(text) {
     return text.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");

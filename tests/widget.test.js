@@ -289,8 +289,11 @@ test('下一字符换行时光标跟到下一行', () => {
     ], 1);
 
     const cursor = root.querySelector('.te-cursor');
+    const capture = root.querySelector('.te-capture');
     assert.equal(cursor.style.left, '0px');
     assert.equal(cursor.style.top, '24px');
+    assert.equal(capture.style.left, '20px');
+    assert.equal(capture.style.top, '58px');
   } finally {
     dom.window.Element.prototype.getBoundingClientRect = originalGetBoundingClientRect;
     widget.destroy();

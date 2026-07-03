@@ -932,3 +932,38 @@ test('段落跳过预览期间忽略额外输入和重复 Shift+Tab', () => {
 
   app.destroy();
 });
+
+test('打字模式下输入框跟随光标位置以便 IME 候选窗正确定位', () => {
+  const dom = new JSDOM('<p id="p">AB</p>', {
+    url: 'https://example.com',
+    pretendToBeVisual: true,
+  });
+  const { document, InputEvent, KeyboardEvent } = dom.window;
+  const app = createTypingApp({
+    document,
+    now: () => 1_000,
+    isVisible: () => true,
+  });
+  const root = document.querySelector('[data-typing-everywhere-ui]').shadowRoot;
+  const capture = root.querySelector('.te-capture');
+
+  app.selectParagraph(document.querySelector('#p'));
+
+  assert.notEqual(capture.style.left, '');
+  assert.notEqual(capture.style.top, '');
+
+  app.capture.dispatchEvent(new InputEvent('beforeinput', {
+    inputType: 'insertText',
+    data: 'A',
+    bubbles: true,
+    cancelable: true,
+  }));
+
+  assert.notEqual(capture.style.left, '');
+
+  document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+
+  assert.equal(capture.style.left, '');
+
+  app.destroy();
+});
